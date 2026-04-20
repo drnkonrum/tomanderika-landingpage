@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Larsenit.fi · TomAndErika.com</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #0a0a0f;
+    --bg-mid: #12121a;
+    --glow-1: rgba(120, 90, 220, 0.15);
+    --glow-2: rgba(60, 160, 200, 0.10);
+    --text-primary: #e8e4df;
+    --text-muted: rgba(232, 228, 223, 0.4);
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-deep);
+    font-family: 'Inter', sans-serif;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Subtle animated gradient orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.5;
+    animation: drift 20s ease-in-out infinite;
+  }
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: var(--glow-1);
+    top: -10%; left: -5%;
+    animation-delay: 0s;
+  }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: var(--glow-2);
+    bottom: -15%; right: -5%;
+    animation-delay: -7s;
+  }
+  .orb-3 {
+    width: 300px; height: 300px;
+    background: rgba(200, 140, 80, 0.06);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -13s;
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25%      { transform: translate(30px, -20px) scale(1.05); }
+    50%      { transform: translate(-20px, 30px) scale(0.95); }
+    75%      { transform: translate(15px, 15px) scale(1.02); }
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Fine horizontal line accent */
+  .line-accent {
+    position: absolute;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--text-muted), transparent);
+    top: calc(50% + 60px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  /* Text container */
+  .fade-container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fade-text {
+    position: absolute;
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-text.hidden {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  .fade-text.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .fade-text .dot {
+    color: rgba(120, 90, 220, 0.6);
+  }
+
+  /* Tiny tagline */
+  .tagline {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* Corner marks — subtle design detail */
+  .corner {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    z-index: 2;
+    opacity: 0.15;
+  }
+  .corner-tl { top: 24px; left: 24px; border-top: 1px solid var(--text-primary); border-left: 1px solid var(--text-primary); }
+  .corner-tr { top: 24px; right: 24px; border-top: 1px solid var(--text-primary); border-right: 1px solid var(--text-primary); }
+  .corner-bl { bottom: 24px; left: 24px; border-bottom: 1px solid var(--text-primary); border-left: 1px solid var(--text-primary); }
+  .corner-br { bottom: 24px; right: 24px; border-bottom: 1px solid var(--text-primary); border-right: 1px solid var(--text-primary); }
+
+  /* Pulse on the dot */
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1; }
+  }
+
+  .fade-text.visible .dot {
+    animation: pulse-dot 4s ease-in-out infinite;
+  }
+</style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="fade-container">
+    <span class="fade-text visible" id="text-a">Larsenit<span class="dot">.</span>fi</span>
+    <span class="fade-text hidden" id="text-b">TomAndErika<span class="dot">.</span>com</span>
+  </div>
+
+  <div class="line-accent"></div>
+  <div class="tagline">home of the larsens</div>
+
+  <script>
+    const textA = document.getElementById('text-a');
+    const textB = document.getElementById('text-b');
+    let showA = true;
+
+    function toggle() {
+      if (showA) {
+        textA.classList.replace('visible', 'hidden');
+        textB.classList.replace('hidden', 'visible');
+      } else {
+        textB.classList.replace('visible', 'hidden');
+        textA.classList.replace('hidden', 'visible');
+      }
+      showA = !showA;
+    }
+
+    setInterval(toggle, 4000);
+  </script>
+</body>
+</html>

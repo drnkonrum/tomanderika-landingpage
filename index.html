@@ -4,10 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Larsenit.fi · TomAndErika.com</title>
+<meta name="description" content="Home of the Larsens">
+<meta property="og:title" content="Larsenit.fi · TomAndErika.com">
+<meta property="og:description" content="Home of the Larsens">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.larsenit.fi/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeR0AAHkdAAC5JQAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARQAAeR0AAIGaAACBlgAAgiUAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGFwB5HQCgmwCAoQDwl6YA8JOiAPCSogAAfBcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGFwB5HQCQmgDwl4YA8JWBAPCVgQDwlYEAAIYlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5HQCQmgDwl4YA8JWBAPCVgQDwlYEA8JWBAPCVgQAAfRcAAAAAAAAAAAAAAAAAAAAAAAAeR0AkJoA8JeGAPCVgQDwlYEA8JWBAPCVgQDwlYEAAIglAAAAAAAAAAAAAAAAAAAAAAAAAHkdAIGaAPCXhgDwlYEAm5aBAJyWgQDwlYEAm5aBAPCVgQAAgZoAAAAAAAAAAAAAAAAAAAAAeR0AgJoA8JeGAPCVgQDwlYEA8JWBAPCVgQDwlYEAm5aBAACIJQAAAAAAAAAAAAAAAAAAAIGaAPCVgQDwlYEAm5aBAJyWgQDwlYEA8JWBAPCVgQDwlYEAAIYlAAAAAAAAAAAAAAAAAAB5HQCAmgDwl4YA8JWBAPCVgQDwlYEAm5aBAJyWgQDwlYEAm5aBAACIJQAAAAAAAAAAAAAAAAAAAHkdAJCaAPCXhgDwlYEAm5aBAJyWgQDwlYEAm5aBAJyWgQDwlYEAAH0XAAAAAAAAAAAAAAAAAAAAAABGFwCAmgDwl4YA8JWBAPCVgQDwlYEA8JWBAPCVgQDwlYEAAIYlAAAAAAAAAAAAAAAAAAAAAAAAAABGFwB5HQCQmgDwl4YA8JeGAPCVgQDwl4YA8JeGAPCVgQAAgZoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGFwB5HQCgmwDwl4YA8JeGAPCXhgDwl4YA8JeGAPCVgQAAiCUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARhcAeR0AAJCaAPCXhgDwl4YA8JeGAPCXhgAAgZoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeR0AAIGaAACQmgAAkJoAAIGaAAB5HQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ccircle%20cx='50'%20cy='50'%20r='46'%20fill='%237858dc'/%3E%3Ctext%20x='50'%20y='68'%20text-anchor='middle'%20font-family='Great%20Vibes,%20cursive'%20font-size='52'%20fill='%23ffffff'%3ET%26E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300&display=swap');
-
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
@@ -21,7 +29,7 @@
 
   html, body {
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
     background: var(--bg-deep);
     font-family: 'Inter', sans-serif;
   }
@@ -156,6 +164,10 @@
   .corner-bl { bottom: 24px; left: 24px; border-bottom: 1px solid var(--text-primary); border-left: 1px solid var(--text-primary); }
   .corner-br { bottom: 24px; right: 24px; border-bottom: 1px solid var(--text-primary); border-right: 1px solid var(--text-primary); }
 
+  @media (max-width: 400px) {
+    .corner-bl, .corner-br { display: none; }
+  }
+
   /* Pulse on the dot */
   @keyframes pulse-dot {
     0%, 100% { opacity: 0.6; }
@@ -164,6 +176,16 @@
 
   .fade-text.visible .dot {
     animation: pulse-dot 4s ease-in-out infinite;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .orb { animation: none; }
+    .fade-text {
+      transition: opacity 0.3s;
+      transform: none !important;
+    }
+    .fade-text.visible .dot { animation: none; }
   }
 </style>
 </head>
@@ -178,13 +200,17 @@
   <div class="corner corner-bl"></div>
   <div class="corner corner-br"></div>
 
-  <div class="fade-container">
-    <span class="fade-text visible" id="text-a">Larsenit<span class="dot">.</span>fi</span>
-    <span class="fade-text hidden" id="text-b">TomAndErika<span class="dot">.</span>com</span>
+  <div class="fade-container" role="marquee" aria-live="polite" aria-label="Rotating site names">
+    <span class="fade-text visible" id="text-a" lang="en">Larsenit<span class="dot">.</span>fi</span>
+    <span class="fade-text hidden" id="text-b" lang="en">TomAndErika<span class="dot">.</span>com</span>
   </div>
 
   <div class="line-accent"></div>
   <div class="tagline">home of the larsens</div>
+
+  <noscript>
+    <style>.fade-text.hidden { opacity: 1; transform: none; position: relative; }</style>
+  </noscript>
 
   <script>
     const textA = document.getElementById('text-a');
@@ -193,11 +219,15 @@
 
     function toggle() {
       if (showA) {
-        textA.classList.replace('visible', 'hidden');
-        textB.classList.replace('hidden', 'visible');
+        textA.classList.remove('visible');
+        textA.classList.add('hidden');
+        textB.classList.remove('hidden');
+        textB.classList.add('visible');
       } else {
-        textB.classList.replace('visible', 'hidden');
-        textA.classList.replace('hidden', 'visible');
+        textB.classList.remove('visible');
+        textB.classList.add('hidden');
+        textA.classList.remove('hidden');
+        textA.classList.add('visible');
       }
       showA = !showA;
     }
